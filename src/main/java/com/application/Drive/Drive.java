@@ -1,4 +1,4 @@
-package com.Application.Drive;
+package com.application.Drive;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;

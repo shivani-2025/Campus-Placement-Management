@@ -1,4 +1,4 @@
-package com.Application.DriveType;
+package com.application.DriveType;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
