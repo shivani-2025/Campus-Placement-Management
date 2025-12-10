@@ -1,7 +1,7 @@
-package com.Application.Drive;
+package com.application.Drive;
 
-import com.example.Employee.EmployeeRepository;
-import com.example.DriveType.DriveTypeRepository;
+import com.application.Employee.EmployeeRepository;
+import com.application.DriveType.DriveTypeRepository;
 
 import org.springframework.stereotype.Service;
 
