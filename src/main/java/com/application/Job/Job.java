@@ -16,7 +16,6 @@ import jakarta.persistence.GenerationType;
 public class Job {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "jobRole") // <-- FIX: Forces Hibernate to use "jobRole"
