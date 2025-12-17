@@ -1,40 +1,40 @@
-package com.application.slot;
-
+package com.application.project.slot;
 
 import jakarta.persistence.*;
 import java.time.LocalTime;
+
+import com.application.project.Drive.Drive;
 
 @Entity
 @Table(name = "slot")
 public class Slot {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "driveId")
-    private Integer driveId;
+    // FK → drive.id
+    @ManyToOne
+    @JoinColumn(name = "driveId", referencedColumnName = "id")
+    private Drive drive;
 
     private LocalTime startTime;
     private LocalTime endTime;
 
     public Slot() {}
 
-    public Slot(Integer driveId, LocalTime startTime, LocalTime endTime) {
-        this.driveId = driveId;
-        this.startTime = startTime;
-        this.endTime = endTime;
-    }
+    // -------- Getters & Setters --------
 
     public Integer getId() {
         return id;
     }
 
-    public Integer getDriveId() {
-        return driveId;
+    public Drive getDrive() {
+        return drive;
     }
 
-    public void setDriveId(Integer driveId) {
-        this.driveId = driveId;
+    public void setDrive(Drive drive) {
+        this.drive = drive;
     }
 
     public LocalTime getStartTime() {
@@ -53,4 +53,3 @@ public class Slot {
         this.endTime = endTime;
     }
 }
-

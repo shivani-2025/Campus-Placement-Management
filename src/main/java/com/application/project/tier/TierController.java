@@ -1,4 +1,4 @@
-package com.application.tier;
+package com.application.project.tier;
 
 import org.springframework.web.bind.annotation.*;
 import java.util.List;

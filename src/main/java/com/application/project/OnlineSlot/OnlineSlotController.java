@@ -1,10 +1,10 @@
-package com.application.OnlineSlot;
+package com.application.project.OnlineSlot;
 
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("onlineslots")
+@RequestMapping("/onlineslots")
 public class OnlineSlotController {
 
     private final OnlineSlotService service;
@@ -29,7 +29,9 @@ public class OnlineSlotController {
     }
 
     @PutMapping("/{id}")
-    public OnlineSlot update(@PathVariable Integer id, @RequestBody OnlineSlot onlineSlot) {
+    public OnlineSlot update(
+            @PathVariable Integer id,
+            @RequestBody OnlineSlot onlineSlot) {
         return service.updateOnlineSlot(id, onlineSlot);
     }
 

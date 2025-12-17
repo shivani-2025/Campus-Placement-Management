@@ -1,4 +1,4 @@
-package com.application.slot;
+package com.application.project.slot;
 
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -22,14 +22,17 @@ public class SlotService {
 
     public Slot getSlotById(Integer id) {
         return slotRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Slot not found with id: " + id));
+                .orElseThrow(() ->
+                        new RuntimeException("Slot not found with id: " + id));
     }
 
     public Slot updateSlot(Integer id, Slot updatedSlot) {
         Slot existing = getSlotById(id);
-        existing.setDriveId(updatedSlot.getDriveId());
+
+        existing.setDrive(updatedSlot.getDrive());
         existing.setStartTime(updatedSlot.getStartTime());
         existing.setEndTime(updatedSlot.getEndTime());
+
         return slotRepository.save(existing);
     }
 

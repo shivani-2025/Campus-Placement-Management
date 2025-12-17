@@ -1,7 +1,8 @@
-package com.application.TierRound;
+package com.application.project.TierRound;
 
-import com.application.DetailedRound.DetailedRound;
-import com.application.TierTotalRound.TierTotalRound;
+import com.application.project.DetailedRound.DetailedRound;
+import com.application.project.TierTotalRound.TierTotalRound;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -9,6 +10,7 @@ import jakarta.persistence.*;
 public class TierRound {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne

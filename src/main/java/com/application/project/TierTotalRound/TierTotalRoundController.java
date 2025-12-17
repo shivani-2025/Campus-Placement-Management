@@ -1,12 +1,10 @@
-package com.application.TierTotalRound;
-
+package com.application.project.TierTotalRound;
 
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
-@RequestMapping("/tiers")
+@RequestMapping("/tiertotalround")
 @CrossOrigin
 public class TierTotalRoundController {
 
@@ -26,20 +24,26 @@ public class TierTotalRoundController {
         return service.getById(id);
     }
 
+    @GetMapping("/tier/{tierId}")
+    public TierTotalRound getByTierId(@PathVariable Integer tierId) {
+        return service.getByTierId(tierId);
+    }
+
     @PostMapping
-    public TierTotalRound create(@RequestBody TierTotalRound tier) {
-        return service.save(tier);
+    public TierTotalRound create(@RequestBody TierTotalRound tierTotalRound) {
+        return service.save(tierTotalRound);
     }
 
     @PutMapping("/{id}")
     public TierTotalRound update(
             @PathVariable Integer id,
-            @RequestBody TierTotalRound tier) {
+            @RequestBody TierTotalRound updated) {
 
         TierTotalRound existing = service.getById(id);
-        if (existing == null) return null;
 
-        existing.setTotalRounds(tier.getTotalRounds());
+        existing.setTotalRounds(updated.getTotalRounds());
+        existing.setTier(updated.getTier());
+
         return service.save(existing);
     }
 

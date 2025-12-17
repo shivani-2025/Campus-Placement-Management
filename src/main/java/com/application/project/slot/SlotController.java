@@ -1,12 +1,10 @@
-package com.application.slot;
-
+package com.application.project.slot;
 
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
-@RequestMapping("slots")
+@RequestMapping("/slots")
 public class SlotController {
 
     private final SlotService slotService;
@@ -31,7 +29,9 @@ public class SlotController {
     }
 
     @PutMapping("/{id}")
-    public Slot updateSlot(@PathVariable Integer id, @RequestBody Slot slot) {
+    public Slot updateSlot(
+            @PathVariable Integer id,
+            @RequestBody Slot slot) {
         return slotService.updateSlot(id, slot);
     }
 

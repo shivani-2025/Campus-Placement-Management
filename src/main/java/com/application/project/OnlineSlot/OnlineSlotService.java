@@ -1,4 +1,4 @@
-package com.application.OnlineSlot;
+package com.application.project.OnlineSlot;
 
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -22,13 +22,16 @@ public class OnlineSlotService {
 
     public OnlineSlot getOnlineSlotById(Integer id) {
         return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Online Slot not found for id: " + id));
+                .orElseThrow(() ->
+                        new RuntimeException("OnlineSlot not found for id: " + id));
     }
 
     public OnlineSlot updateOnlineSlot(Integer id, OnlineSlot updated) {
         OnlineSlot existing = getOnlineSlotById(id);
-        existing.setSlotId(updated.getSlotId());
-        existing.setEmployeeId(updated.getEmployeeId());
+
+        existing.setSlot(updated.getSlot());
+        existing.setEmployee(updated.getEmployee());
+
         return repository.save(existing);
     }
 

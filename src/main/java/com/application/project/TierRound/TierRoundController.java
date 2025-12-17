@@ -1,4 +1,4 @@
-package com.application.TierRound;
+package com.application.project.TierRound;
 
 import org.springframework.web.bind.annotation.*;
 

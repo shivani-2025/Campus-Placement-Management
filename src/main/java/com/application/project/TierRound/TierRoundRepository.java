@@ -1,4 +1,4 @@
-package com.application.TierRound;
+package com.application.project.TierRound;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
