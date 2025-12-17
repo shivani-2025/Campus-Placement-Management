@@ -1,54 +1,41 @@
 package com.application.project.Job;
 
-
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
 public class JobService {
 
-    @Autowired
-    private JobRepository jobRepository;
+    private final JobRepository repository;
 
-    // 1. CREATE (Used by POST)
-    public Job saveJob(Job job) {
-        return jobRepository.save(job);
+    public JobService(JobRepository repository) {
+        this.repository = repository;
     }
 
-    // 2. READ ALL (Used by GET /api/jobs)
-    public List<Job> getAllJobs() {
-        return jobRepository.findAll();
+    public Job create(Job job) {
+        return repository.save(job);
     }
 
-    // 3. READ BY ID (Used by GET /api/jobs/{id})
-    public Job findJobById(Integer id) {
-        // JpaRepository's findById returns an Optional, so we use orElse(null)
-        return jobRepository.findById(id).orElse(null); 
+    public List<Job> getAll() {
+        return repository.findAll();
     }
 
-    // 4. UPDATE (Used by PUT /api/jobs/{id})
-    public Job updateJob(Integer id, Job jobDetails) {
-        // Find the existing Job by ID
-        return jobRepository.findById(id)
-            .map(existingJob -> {
-                // Update the fields from the request body
-                existingJob.setJobRole(jobDetails.getJobRole());
-                existingJob.setTier(jobDetails.getTier());
-
-                // Update the linked Employee.
-                existingJob.setEmployee(jobDetails.getEmployee()); 
-
-                // Save the updated entity back to the database
-                return jobRepository.save(existingJob);
-            })
-            // If the job with the given ID is not found, return null
-            .orElse(null); 
+    public Job getById(Integer id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Job not found with id: " + id));
     }
 
-    // 5. DELETE (Used by the new DELETE /api/jobs/{id})
-    public void deleteJob(Integer id) {
-        jobRepository.deleteById(id);
+    public Job update(Integer id, Job updated) {
+        Job existing = getById(id);
+
+        existing.setJobRole(updated.getJobRole());
+        existing.setEmployee(updated.getEmployee());
+        existing.setTier(updated.getTier());
+
+        return repository.save(existing);
+    }
+
+    public void delete(Integer id) {
+        repository.deleteById(id);
     }
 }

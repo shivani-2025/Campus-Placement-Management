@@ -1,15 +1,8 @@
 package com.application.project.Job;
 
 import com.application.project.Employee.Employee;
-
-import jakarta.persistence.Column; 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.persistence.GeneratedValue; 
-import jakarta.persistence.GenerationType; 
+import com.application.project.tier.Tier;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "job")
@@ -19,28 +12,18 @@ public class Job {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "jobRole") // <-- FIX: Forces Hibernate to use "jobRole"
     private String jobRole;
 
-    @ManyToOne 
-    @JoinColumn(name = "employeeId", referencedColumnName = "id") // <-- Correctly uses "employeeId"
-    private Employee employee; 
+    @ManyToOne
+    @JoinColumn(name = "employeeId")
+    private Employee employee;
 
-    @Column(name = "tier") // <-- FIX: Forces Hibernate to use "tier"
-    private Integer tier;
+    @ManyToOne
+    @JoinColumn(name = "tier")
+    private Tier tier;
 
-    // --- CONSTRUCTORS ---
-    public Job() {
-    }
+    // Getters & Setters
 
-    public Job(Integer id, String jobRole, Employee employee, Integer tier) {
-        this.id = id;
-        this.jobRole = jobRole;
-        this.employee = employee;
-        this.tier = tier;
-    }
-
-    // --- GETTERS AND SETTERS ---
     public Integer getId() {
         return id;
     }
@@ -65,11 +48,11 @@ public class Job {
         this.employee = employee;
     }
 
-    public Integer getTier() {
+    public Tier getTier() {
         return tier;
     }
 
-    public void setTier(Integer tier) {
+    public void setTier(Tier tier) {
         this.tier = tier;
     }
 }
