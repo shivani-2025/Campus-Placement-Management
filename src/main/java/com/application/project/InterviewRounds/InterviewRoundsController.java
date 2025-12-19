@@ -1,4 +1,4 @@
-package com.application.InterviewRounds;
+package com.application.project.InterviewRounds;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

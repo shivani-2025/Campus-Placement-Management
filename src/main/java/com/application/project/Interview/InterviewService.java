@@ -1,7 +1,8 @@
+package com.application.project.Interview;
 import org.springframework.stereotype.Service;
 
-import com.application.TierTotalRound.TierTotalRound;
-import com.application.TierTotalRound.TierTotalRoundRepository;
+import com.application.project.TierTotalRound.TierTotalRound;
+import com.application.project.TierTotalRound.TierTotalRoundRepository;
 
 @Service
 public class InterviewService {

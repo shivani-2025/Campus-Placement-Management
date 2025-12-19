@@ -1,9 +1,9 @@
-package com.application.Interview;
+package com.application.project.Interview;
 
 import org.springframework.web.bind.annotation.*;
 
-import com.application.Interview.Interview;
-import com.application.Interview.InterviewService;
+import com.application.project.Interview.Interview;
+import com.application.project.Interview.InterviewService;
 
 @RestController
 @RequestMapping("/interviews")

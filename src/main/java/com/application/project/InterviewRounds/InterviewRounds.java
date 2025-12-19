@@ -1,11 +1,11 @@
-package com.application.InterviewRounds;
+package com.application.project.InterviewRounds;
 
 import jakarta.persistence.*;
 
-import com.application.StudentDriveJob.StudentDriveJob;
-import com.application.Employee.Employee;
-import com.application.InterviewStatus.InterviewStatus;
-import com.application.TierRound.TierRound;
+import com.application.project.Employee.Employee;
+import com.application.project.InterviewStatus.InterviewStatus;
+import com.application.project.StudentDriveJob.StudentDriveJob;
+import com.application.project.TierRound.TierRound;
 
 @Entity
 @Table(name = "interview_rounds")

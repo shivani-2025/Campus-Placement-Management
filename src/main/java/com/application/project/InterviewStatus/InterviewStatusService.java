@@ -1,4 +1,4 @@
-package com.application.InterviewStatus;
+package com.application.project.InterviewStatus;
 
 import org.springframework.stereotype.Service;
 import java.util.List;

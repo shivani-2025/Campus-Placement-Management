@@ -1,3 +1,4 @@
+package com.application.project.Interview;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface InterviewRepository

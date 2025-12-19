@@ -1,12 +1,12 @@
-package com.application.Interview;
+package com.application.project.Interview;
 
 import jakarta.persistence.*;   // ⭐ THIS WAS CRITICAL
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-import com.application.Employee.Employee;
-import com.application.InterviewStatus.InterviewStatus;
-import com.application.StudentDriveJob.StudentDriveJob;
+import com.application.project.Employee.Employee;
+import com.application.project.InterviewStatus.InterviewStatus;
+import com.application.project.StudentDriveJob.StudentDriveJob;
 
 @Entity
 @Table(name = "interview")

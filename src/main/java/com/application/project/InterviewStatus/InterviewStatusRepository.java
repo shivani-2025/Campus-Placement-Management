@@ -1,4 +1,4 @@
-package com.application.InterviewStatus;
+package com.application.project.InterviewStatus;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;

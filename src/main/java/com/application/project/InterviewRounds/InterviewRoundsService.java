@@ -1,10 +1,10 @@
-package com.application.InterviewRounds;
+package com.application.project.InterviewRounds;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.application.TierTotalRound.TierTotalRound;
-import com.application.TierTotalRound.TierTotalRoundRepository;
+import com.application.project.TierTotalRound.TierTotalRound;
+import com.application.project.TierTotalRound.TierTotalRoundRepository;
 
 import java.util.List;
 
