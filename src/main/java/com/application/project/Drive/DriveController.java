@@ -1,40 +1,43 @@
 package com.application.project.Drive;
 
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/drive")
+@RequestMapping("/drive")
 public class DriveController {
 
-    private final DriveService service;
+    private final DriveService driveService;
 
-    public DriveController(DriveService service) {
-        this.service = service;
-    }
-
-    @GetMapping
-    public List<Drive> getAll() {
-        return service.getAll();
-    }
-
-    @GetMapping("/{id}")
-    public Drive getById(@PathVariable Integer id) {
-        return service.getById(id);
+    public DriveController(DriveService driveService) {
+        this.driveService = driveService;
     }
 
     @PostMapping
-    public Drive create(@RequestBody Drive drive) {
-        return service.create(drive);
+    public Drive createDrive(@RequestBody Drive drive) {
+        return driveService.createDrive(drive);
+    }
+
+    @GetMapping
+    public List<Drive> getAllDrives() {
+        return driveService.getAllDrives();
+    }
+
+    @GetMapping("/{id}")
+    public Drive getDriveById(@PathVariable Integer id) {
+        return driveService.getDriveById(id);
     }
 
     @PutMapping("/{id}")
-    public Drive update(@PathVariable Integer id, @RequestBody Drive drive) {
-        return service.update(id, drive);
+    public Drive updateDrive(
+            @PathVariable Integer id,
+            @RequestBody Drive drive) {
+        return driveService.updateDrive(id, drive);
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id) {
-        service.delete(id);
+    public void deleteDrive(@PathVariable Integer id) {
+        driveService.deleteDrive(id);
     }
 }

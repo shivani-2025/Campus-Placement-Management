@@ -1,6 +1,10 @@
 package com.application.project.Drive;
 
+import com.application.project.Employee.Employee;
+import com.application.project.DriveStatus.DriveStatus;
+import com.application.project.DriveType.DriveType;
 import jakarta.persistence.*;
+
 import java.time.LocalDate;
 
 @Entity
@@ -8,20 +12,29 @@ import java.time.LocalDate;
 public class Drive {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     private LocalDate startDate;
+
     private LocalDate endDate;
-
-    private String status;
-
-    private Integer employeeIdCreatedBy;
 
     private Integer totalPanelistApply;
 
-    private Integer driveTypeId;
+    @ManyToOne
+    @JoinColumn(name = "employeeIdCreatedBy")
+    private Employee employeeCreatedBy;
 
-    // --- GETTERS & SETTERS ---
+    @ManyToOne
+    @JoinColumn(name = "driveTypeId")
+    private DriveType driveType;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "driveStatusId", nullable = false)
+    private DriveStatus driveStatus;
+
+    public Drive() {
+    }
 
     public Integer getId() {
         return id;
@@ -47,22 +60,6 @@ public class Drive {
         this.endDate = endDate;
     }
 
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public Integer getEmployeeIdCreatedBy() {
-        return employeeIdCreatedBy;
-    }
-
-    public void setEmployeeIdCreatedBy(Integer employeeIdCreatedBy) {
-        this.employeeIdCreatedBy = employeeIdCreatedBy;
-    }
-
     public Integer getTotalPanelistApply() {
         return totalPanelistApply;
     }
@@ -71,11 +68,27 @@ public class Drive {
         this.totalPanelistApply = totalPanelistApply;
     }
 
-    public Integer getDriveTypeId() {
-        return driveTypeId;
+    public Employee getEmployeeCreatedBy() {
+        return employeeCreatedBy;
     }
 
-    public void setDriveTypeId(Integer driveTypeId) {
-        this.driveTypeId = driveTypeId;
+    public void setEmployeeCreatedBy(Employee employeeCreatedBy) {
+        this.employeeCreatedBy = employeeCreatedBy;
+    }
+
+    public DriveType getDriveType() {
+        return driveType;
+    }
+
+    public void setDriveType(DriveType driveType) {
+        this.driveType = driveType;
+    }
+
+    public DriveStatus getDriveStatus() {
+        return driveStatus;
+    }
+
+    public void setDriveStatus(DriveStatus driveStatus) {
+        this.driveStatus = driveStatus;
     }
 }
