@@ -1,8 +1,11 @@
 package com.application.project.Drive;
 
+import com.application.project.Employee.Employee;
 import com.application.project.Employee.EmployeeRepository;
+import com.application.project.DriveStatus.DriveStatus;
+import com.application.project.DriveStatus.DriveStatusRepository;
+import com.application.project.DriveType.DriveType;
 import com.application.project.DriveType.DriveTypeRepository;
-
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,89 +13,88 @@ import java.util.List;
 @Service
 public class DriveService {
 
-    private final DriveRepository driveRepo;
-    private final EmployeeRepository employeeRepo;
-    private final DriveTypeRepository driveTypeRepo;
+    private final DriveRepository driveRepository;
+    private final EmployeeRepository employeeRepository;
+    private final DriveTypeRepository driveTypeRepository;
+    private final DriveStatusRepository driveStatusRepository;
 
-    public DriveService(DriveRepository driveRepo,
-                        EmployeeRepository employeeRepo,
-                        DriveTypeRepository driveTypeRepo) {
-        this.driveRepo = driveRepo;
-        this.employeeRepo = employeeRepo;
-        this.driveTypeRepo = driveTypeRepo;
+    public DriveService(
+            DriveRepository driveRepository,
+            EmployeeRepository employeeRepository,
+            DriveTypeRepository driveTypeRepository,
+            DriveStatusRepository driveStatusRepository) {
+        this.driveRepository = driveRepository;
+        this.employeeRepository = employeeRepository;
+        this.driveTypeRepository = driveTypeRepository;
+        this.driveStatusRepository = driveStatusRepository;
     }
 
-    // ------------------- CREATE -------------------
-    public Drive create(Drive drive) {
+    public Drive createDrive(Drive drive) {
 
-        // 1️⃣ Check valid date range
-        if (drive.getEndDate().isBefore(drive.getStartDate())) {
-            throw new IllegalArgumentException("End date cannot be before start date.");
+        if (drive.getEmployeeCreatedBy() != null) {
+            Integer empId = drive.getEmployeeCreatedBy().getId();
+            Employee employee = employeeRepository.findById(empId)
+                    .orElseThrow(() -> new RuntimeException("Employee not found with id: " + empId));
+            drive.setEmployeeCreatedBy(employee);
         }
 
-        // 2️⃣ Check employee exists
-        if (!employeeRepo.existsById(drive.getEmployeeIdCreatedBy())) {
-            throw new IllegalArgumentException("Invalid employeeIdCreatedBy. Employee does not exist.");
+        if (drive.getDriveType() != null) {
+            Integer typeId = drive.getDriveType().getId();
+            DriveType driveType = driveTypeRepository.findById(typeId)
+                    .orElseThrow(() -> new RuntimeException("DriveType not found with id: " + typeId));
+            drive.setDriveType(driveType);
         }
 
-        // 3️⃣ Check driveType exists
-        if (!driveTypeRepo.existsById(drive.getDriveTypeId())) {
-            throw new IllegalArgumentException("Invalid driveTypeId. Drive type does not exist.");
-        }
+        Integer statusId = drive.getDriveStatus().getId();
+        DriveStatus status = driveStatusRepository.findById(statusId)
+                .orElseThrow(() -> new RuntimeException("DriveStatus not found with id: " + statusId));
+        drive.setDriveStatus(status);
 
-        return driveRepo.save(drive);
+        return driveRepository.save(drive);
     }
 
-    // ------------------- READ -------------------
-    public List<Drive> getAll() {
-        return driveRepo.findAll();
+    public List<Drive> getAllDrives() {
+        return driveRepository.findAll();
     }
 
-    public Drive getById(Integer id) {
-        return driveRepo.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Drive not found with id: " + id));
+    public Drive getDriveById(Integer id) {
+        return driveRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Drive not found with id: " + id));
     }
 
-    // ------------------- UPDATE -------------------
-    public Drive update(Integer id, Drive updated) {
-        Drive existing = getById(id);
+    public Drive updateDrive(Integer id, Drive updatedDrive) {
 
-        if (updated.getStartDate() != null)
-            existing.setStartDate(updated.getStartDate());
+        Drive existing = getDriveById(id);
 
-        if (updated.getEndDate() != null)
-            existing.setEndDate(updated.getEndDate());
+        existing.setStartDate(updatedDrive.getStartDate());
+        existing.setEndDate(updatedDrive.getEndDate());
+        existing.setTotalPanelistApply(updatedDrive.getTotalPanelistApply());
 
-        // Validate date order
-        if (existing.getEndDate().isBefore(existing.getStartDate())) {
-            throw new IllegalArgumentException("End date cannot be before start date.");
+        if (updatedDrive.getEmployeeCreatedBy() != null) {
+            Integer empId = updatedDrive.getEmployeeCreatedBy().getId();
+            Employee employee = employeeRepository.findById(empId)
+                    .orElseThrow(() -> new RuntimeException("Employee not found with id: " + empId));
+            existing.setEmployeeCreatedBy(employee);
         }
 
-        if (updated.getStatus() != null)
-            existing.setStatus(updated.getStatus());
-
-        if (updated.getEmployeeIdCreatedBy() != null) {
-            if (!employeeRepo.existsById(updated.getEmployeeIdCreatedBy())) {
-                throw new IllegalArgumentException("Employee does not exist.");
-            }
-            existing.setEmployeeIdCreatedBy(updated.getEmployeeIdCreatedBy());
+        if (updatedDrive.getDriveType() != null) {
+            Integer typeId = updatedDrive.getDriveType().getId();
+            DriveType driveType = driveTypeRepository.findById(typeId)
+                    .orElseThrow(() -> new RuntimeException("DriveType not found with id: " + typeId));
+            existing.setDriveType(driveType);
         }
 
-        if (updated.getTotalPanelistApply() != null)
-            existing.setTotalPanelistApply(updated.getTotalPanelistApply());
-
-        if (updated.getDriveTypeId() != null) {
-            if (!driveTypeRepo.existsById(updated.getDriveTypeId())) {
-                throw new IllegalArgumentException("Drive type does not exist.");
-            }
-            existing.setDriveTypeId(updated.getDriveTypeId());
+        if (updatedDrive.getDriveStatus() != null) {
+            Integer statusId = updatedDrive.getDriveStatus().getId();
+            DriveStatus status = driveStatusRepository.findById(statusId)
+                    .orElseThrow(() -> new RuntimeException("DriveStatus not found with id: " + statusId));
+            existing.setDriveStatus(status);
         }
 
-        return driveRepo.save(existing);
+        return driveRepository.save(existing);
     }
 
-    // ------------------- DELETE -------------------
-    public void delete(Integer id) {
-        driveRepo.deleteById(id);
+    public void deleteDrive(Integer id) {
+        driveRepository.deleteById(id);
     }
 }
